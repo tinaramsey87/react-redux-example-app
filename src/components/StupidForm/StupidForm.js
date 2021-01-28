@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
-import stuff from 'stuff';
+import {useDispatch, useSelector} from 'react-redux';
 import {actions} from './StupidForm.redux';
 import Select from './Select';
 import Text from './Text';
@@ -9,6 +8,8 @@ import {Col, Row} from 'antd';
 
 const StupidForm = () => {
     const dispatch = useDispatch();
+    const stuff = useSelector(state => state.stupidform.form);
+
     useEffect(() => {
         const defaultValues = stuff.reduce((acc, current) => {
             acc[current.key] = current.defaultValue === undefined 
@@ -17,8 +18,13 @@ const StupidForm = () => {
 
             return acc;
         }, {});
-        dispatch(actions.setState(defaultValues));
+        dispatch(actions.setValue(defaultValues));
+    }, [dispatch, stuff]);
+
+    useEffect(() => {
+        dispatch(actions.getForm());
     }, [dispatch]);
+
     return (
         <form>
             <Row gutter={[16,16]}>

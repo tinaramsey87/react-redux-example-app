@@ -1,5 +1,10 @@
 
-const initialState = {};
+import api from 'express-api';
+
+const initialState = {
+    form: [],
+    values: {}
+};
 
 export const types = {SETSTATE:'STUPIDFORM-SETSTATE', RESETSTATE:'STUPIDFORM-RESETSTATE'}
 export const reducers = (state = initialState, action) => {
@@ -23,5 +28,22 @@ export const actions = {
     resetState: () => ({type: types.RESETSTATE}),
 
 
-    
+    setValue: (data) => (dispatch, getState) => {
+        dispatch(actions.setState({
+            ...getState().stupidform,
+            values: {...getState().stupidform.values, ...data}
+        }));
+    },
+
+
+    getForm: () => async (dispatch, getState) => {
+        try {
+            let response = await api.get('/forms/testform')
+            dispatch(actions.setState({
+                form: response.data.form
+            }));
+        } catch(e) {
+
+        }
+    }
 }

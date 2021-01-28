@@ -5,10 +5,10 @@ import {Select as AntSelect} from 'antd';
 
 const Select = ({dataKey, ...props}) => {
     const dispatch = useDispatch(),
-        value = useSelector(state => state.stupidform[dataKey]);
+        value = useSelector(state => state.stupidform.values[dataKey]);
 
     const handleChange = (value) => {
-        dispatch(actions.setState({[dataKey]: value}));
+        dispatch(actions.setValue({[dataKey]: value}));
     }
     return (
         <AntSelect value={value} style={{width: '100%'}} onChange={handleChange}>

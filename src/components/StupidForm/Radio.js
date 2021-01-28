@@ -5,10 +5,10 @@ import {Radio as AntRadio} from 'antd';
 
 const Radio = ({dataKey, ...props}) => {
     const dispatch = useDispatch(),
-        value = useSelector(state => state.stupidform[dataKey]);
+        value = useSelector(state => state.stupidform.values[dataKey]);
 
     const handleChange = (e) => {
-        dispatch(actions.setState({[dataKey]: e.target.value}));
+        dispatch(actions.setValue({[dataKey]: e.target.value}));
     }
     return (
         <>

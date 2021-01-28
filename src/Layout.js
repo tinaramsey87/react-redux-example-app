@@ -18,6 +18,7 @@ function Layout(props) {
                             <Menu.Item key="2" ><Link to='/asynclist'>ASYNC LIST</Link></Menu.Item>
                             <Menu.Item key="3" ><Link to='/whatdo'>WHAT DO</Link></Menu.Item>
                             <Menu.Item key="4" ><Link to='/stupidform'>STUPID FORM</Link></Menu.Item>
+                            <Menu.Item key="5" ><Link to='/login'>LOGIN</Link></Menu.Item>
                         </Menu>
                     </div>
                 </Sider>

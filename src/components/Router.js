@@ -8,7 +8,8 @@ import NotFound from 'components/NotFound';
 const Counter = lazy(() => import('components/Counter')),
     AsyncList = lazy(() => import('components/AsyncList')),
     WhatDo = lazy(() => import('components/WhatDo')),
-    StupidForm = lazy(() => import('components/StupidForm'));
+    StupidForm = lazy(() => import('components/StupidForm')),
+    Login = lazy(() => import('components/Login'));
 
 const Router = () => {
     return (
@@ -22,6 +23,12 @@ const Router = () => {
                         >
                             <Route exact path='/'>
                                 <div>Hi!</div>
+                            </Route>
+
+                            <Route exact path='/login'>
+                                <Suspense fallback={<div>Loading</div>}>
+                                    <Login />
+                                </Suspense>
                             </Route>
 
                             <Route exact path='/counter'>
