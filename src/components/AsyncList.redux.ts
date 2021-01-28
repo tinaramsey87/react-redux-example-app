@@ -1,5 +1,5 @@
-import api from 'api';
-import bullshitPromise from 'axios.promise';
+import api from '../api';
+import bullshitPromise from '../axios.promise';
 import { message } from 'antd';
 
 const initialState = {users: [], loading: false, loaded: false, editing: null, editData: null};
