@@ -4,12 +4,13 @@ import {actions} from './AsyncList.redux';
 import { Card, Input } from 'antd';
 import { ReloadOutlined, EditOutlined, GlobalOutlined } from '@ant-design/icons';
 import UserAddress from './UserAddress';
+import { AsyncListInitialState } from './AsyncListTypes.d';
 
-function ListItem({dataKey}) {
+function ListItem({dataKey}: {dataKey: number}) {
     const dispatch = useDispatch(),
-        user = useSelector(state => state.asynclist.users[dataKey]),
-        name = useSelector(state => state.asynclist.editData ? state.asynclist.editData.name : ''),
-        editing = useSelector(state => state.asynclist.editing === dataKey);
+        user = useSelector((state: AsyncListInitialState) => state.asynclist.users[dataKey]),
+        name = useSelector((state: AsyncListInitialState) => state.asynclist.editData ? state.asynclist.editData.name : ''),
+        editing = useSelector((state: AsyncListInitialState) => state.asynclist.editing === dataKey);
 
     
     const handleRefresh = useCallback(() => {

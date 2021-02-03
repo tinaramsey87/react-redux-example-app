@@ -1,15 +1,18 @@
 import React, {lazy, Suspense} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import {ConnectedRouter} from 'connected-react-router';
-import {history} from 'store';
-import Layout from 'Layout';
-import NotFound from 'components/NotFound';
+import {history} from '../store';
+import Layout from '../Layout';
+import NotFound from '../components/NotFound';
 
-const Counter = lazy(() => import('components/Counter')),
-    AsyncList = lazy(() => import('components/AsyncList')),
-    WhatDo = lazy(() => import('components/WhatDo')),
-    StupidForm = lazy(() => import('components/StupidForm')),
-    Login = lazy(() => import('components/Login'));
+
+const Counter = lazy(() => import('./Counter/Counter')),
+    AsyncList = lazy(() => import('./AsyncList/AsyncList')),
+    WhatDo = lazy(() => import('./WhatDo')),
+    StupidForm = lazy(() => import('./StupidForm/StupidForm')),
+    Login = lazy(() => import('./Login/Login'));
+
+const start: number = 0;
 
 const Router = () => {
     return (
@@ -33,7 +36,7 @@ const Router = () => {
 
                             <Route exact path='/counter'>
                                 <Suspense fallback={<div>Loading</div>}>
-                                    <Counter />
+                                    <Counter start={start}/>
                                 </Suspense>
                             </Route>
 

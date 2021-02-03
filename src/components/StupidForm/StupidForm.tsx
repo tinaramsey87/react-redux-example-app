@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {actions} from './StupidForm.redux';
+import { FormElement, InitialFormState } from './FormTypes';
 import Select from './Select';
 import Text from './Text';
 import Radio from './Radio';
@@ -8,10 +9,10 @@ import {Col, Row} from 'antd';
 
 const StupidForm = () => {
     const dispatch = useDispatch();
-    const stuff = useSelector(state => state.stupidform.form);
+    const stuff = useSelector((state: InitialFormState) => state.stupidform.form);
 
     useEffect(() => {
-        const defaultValues = stuff.reduce((acc, current) => {
+        const defaultValues = stuff.reduce((acc: { [x: string]: string | number; }, current: { key: string | number; defaultValue: string; }) => {
             acc[current.key] = current.defaultValue === undefined 
                 ? ''
                 : current.defaultValue;
@@ -28,7 +29,7 @@ const StupidForm = () => {
     return (
         <form>
             <Row gutter={[16,16]}>
-                {stuff.map((element) => {
+                {stuff.map((element: FormElement) => {
                     switch (element.type) {
                         case 'select':
                             return (
@@ -36,7 +37,7 @@ const StupidForm = () => {
                                     key={element.key}
                                     {...element.grid}
                                 >
-                                    <Select {...element} dataKey={element.key} />
+                                    <Select {...element} dataKey={element.key}/>
                                 </Col>
                             );
 
@@ -62,7 +63,10 @@ const StupidForm = () => {
                             );
 
                         default:
-                            return <div key={element.key}>Get Fucked</div>;
+                            return <div key={element.key}>
+                                        Get Rekt
+                                        <p>This type of form element doesn't appear to be supported, sorry.</p>
+                                    </div>;
                     }
                 })}
             </Row>

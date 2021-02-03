@@ -1,11 +1,33 @@
-import api from '../api';
-import bullshitPromise from '../axios.promise';
+import { Dispatch } from 'react';
+import { Action, AnyAction, Dispatch as ReduxDispatch } from 'redux';
+import {AsyncListInitialState} from './AsyncListTypes.d';
+import api from '../../api';
+import bullshitPromise from '../../axios.promise';
 import { message } from 'antd';
 
-const initialState = {users: [], loading: false, loaded: false, editing: null, editData: null};
 
-export const types = {SETSTATE:'ASYNCLIST-SETSTATE', RESETSTATE:'ASYNCLIST-RESETSTATE'}
-export const reducers = (state = initialState, action) => {
+const initialState: AsyncListInitialState = {
+    users: [], 
+    loading: false, 
+    loaded: false, 
+    editing: null, 
+    editData: null,
+    asynclist: {
+        users: [],
+        editData: null,
+        editing: null
+    }
+};
+
+
+export const types = {
+    SETSTATE:'ASYNCLIST-SETSTATE',
+    RESETSTATE:'ASYNCLIST-RESETSTATE',
+    FETCHUSERS: 'ASYNCLIST-FETCHUSERS'
+}
+
+
+export const reducers = (state: AsyncListInitialState = initialState, action: { type: string; data: any; }) => {
     switch (action.type) {
         case types.SETSTATE:
             return {...state, ...action.data}
@@ -17,12 +39,19 @@ export const reducers = (state = initialState, action) => {
             return state;
     }
 };
+
+
 export default reducers;
 
+interface FetchUsersAction extends Action {
+    type: string,
+    data: any
+}
+
 export const actions = {
-    setState: (data) => ({type: types.SETSTATE, data}),
-    fetchUsers: () => async (dispatch, getState) => {
-        dispatch(actions.setState({loading: true}))
+    setState: (data: any) => ({type: types.SETSTATE, data}),
+    fetchUsers: () => async (dispatch: ReduxDispatch<FetchUsersAction>): Promise<void> => {
+        dispatch(actions.setState({loading: true}));
         try {
             let users = await bullshitPromise(api.get('/users'));
             dispatch(actions.setState({users: users.data, loading: false, loaded: true}));
@@ -32,7 +61,7 @@ export const actions = {
             message.error('you fucked up', 5);
         }
     },
-    fetchUser: (index) => async (dispatch, getState) => {
+    fetchUser: (index: number) => async (dispatch: Dispatch<AnyAction>, getState: Function) => {
         try {
             let users = getState().asynclist.users,
                 userId = users[index].id,
@@ -48,7 +77,7 @@ export const actions = {
             message.error('Could not get user', 5);
         }
     },
-    editUser: (index, data) => async (dispatch, getState) => {
+    editUser: (index: number, data: any) => async (dispatch: Dispatch<AnyAction>, getState: Function) => {
         let users = getState().asynclist.users,
             user = {...users[index], ...data},
             newUsers = [
@@ -58,15 +87,15 @@ export const actions = {
             ];
         dispatch(actions.setState({users: newUsers}));
     },
-    editUserData: (data) => async (dispatch, getState) => {
+    editUserData: (data: any) => async (dispatch: Dispatch<AnyAction>, getState: Function) => {
         let editData = getState().asynclist.editData;
         dispatch(actions.setState({editData: {...editData, ...data}}));
     },
-    editAddress: (key, value) => async (dispatch, getState) => {
+    editAddress: (key: string, value: string) => async (dispatch: Dispatch<AnyAction>, getState: Function) => {
         let editData = getState().asynclist.editData;
         dispatch(actions.setState({editData: {...editData, address: {...editData.address, [key]: value}}}));
     },
-    toggleUserEdit: (index) => (dispatch, getState) => {
+    toggleUserEdit: (index: number) => (dispatch: Dispatch<AnyAction>, getState: Function) => {
         let editing = getState().asynclist.editing,
             user = {...getState().asynclist.users[index]};
         let users = getState().asynclist.users;

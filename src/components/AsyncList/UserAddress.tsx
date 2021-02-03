@@ -1,15 +1,16 @@
-import React, {useCallback} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {actions} from './AsyncList.redux';
 import {Input} from 'antd';
+import { AsyncListInitialState } from './AsyncListTypes.d';
 
-const UserAddress = ({dataKey}) => {
+const UserAddress = ({dataKey}: {dataKey: number}) => {
     const dispatch = useDispatch();
-    const address = useSelector(state => state.asynclist.users[dataKey].address),
-        editing = useSelector(state => state.asynclist.editing === dataKey),
-        editData = useSelector(state => state.asynclist.editData);
+    const address = useSelector((state: AsyncListInitialState) => state.asynclist.users[dataKey].address),
+        editing = useSelector((state: AsyncListInitialState) => state.asynclist.editing === dataKey),
+        editData = useSelector((state: AsyncListInitialState) => state.asynclist.editData);
 
-    const handleAddressChange = useCallback((key) => (e) => {
+    const handleAddressChange = useCallback((key) => (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(actions.editAddress(key, e.target.value));
     }, [dispatch])
     return (

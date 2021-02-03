@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.6.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/redux-thunk": "^2.1.0",
     "antd": "^4.10.0",
     "axios": "^0.21.1",
     "connected-react-router": "^6.8.0",
@@ -26,7 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "tsc",
+    "build": "tsc && react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -49,6 +50,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-typescript": "^7.12.7"
+    "@babel/preset-typescript": "^7.12.7",
+    "@types/history": "^4.7.8",
+    "@types/react-router-dom": "^5.1.7"
   }
 }

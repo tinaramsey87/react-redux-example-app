@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Input} from 'antd';
 import {push} from 'connected-react-router';
 import {useDispatch} from 'react-redux';
 
 const WhatDo = () => {
-    const params = useParams();
+    const params: {who: string} = useParams();
     const dispatch = useDispatch();
     const [location, setLocation] = useState(params.who || 'loser');
 
-    const handleChangeLocation = (e) => {
+    const handleChangeLocation = (e: ChangeEvent<HTMLInputElement>) => {
         setLocation(e.target.value);
     }
 
-    const handleEnter = (e) => {
+    const handleEnter = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === 'Enter') {
             dispatch(push(`/whatdo/${location}`));
         }

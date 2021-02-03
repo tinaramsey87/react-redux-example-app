@@ -1,13 +1,19 @@
 
+import { Dispatch } from 'redux';
 import api from '../../express-api';
+import { InitialFormState } from './FormTypes';
 
-const initialState = {
+const initialState: InitialFormState = {
+    stupidform: {
+        form: [],
+        values: []
+    },
     form: [],
     values: {}
 };
 
 export const types = {SETSTATE:'STUPIDFORM-SETSTATE', RESETSTATE:'STUPIDFORM-RESETSTATE'}
-export const reducers = (state = initialState, action) => {
+export const reducers = (state = initialState, action: { type: string; data: any; }) => {
     switch (action.type) {
         case types.SETSTATE:
             return {...state, ...action.data}
@@ -22,13 +28,13 @@ export const reducers = (state = initialState, action) => {
 export default reducers;
 
 export const actions = {
-    setState: (data) => ({type: types.SETSTATE, data}),
+    setState: (data: any) => ({type: types.SETSTATE, data}),
 
 
     resetState: () => ({type: types.RESETSTATE}),
 
 
-    setValue: (data) => (dispatch, getState) => {
+    setValue: (data: any) => (dispatch: Dispatch, getState: Function): void => {
         dispatch(actions.setState({
             ...getState().stupidform,
             values: {...getState().stupidform.values, ...data}
@@ -36,7 +42,7 @@ export const actions = {
     },
 
 
-    getForm: () => async (dispatch, getState) => {
+    getForm: () => async (dispatch: Dispatch, getState: Function): Promise<void> => {
         try {
             let response = await api.get('/forms/testform')
             dispatch(actions.setState({

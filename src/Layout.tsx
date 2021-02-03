@@ -4,7 +4,7 @@ import { Layout as AntLayout, Menu } from 'antd';
 
 
 const { Header, Footer, Sider, Content } = AntLayout;
-function Layout(props) {
+function Layout(props: {children: any}) {
   return (
       <AntLayout>
             <Header><div className='App-text'>Matt is butts</div></Header>
